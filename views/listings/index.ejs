@@ -1,15 +1,29 @@
 <% layout("/layouts/boilerplate") %>
 <style>
   .filters {
-    display: flex;
-    flex-wrap: wrap;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
     align-items: center;
+    gap: 1.8rem;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
   }
 
   .filter {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 70px;
+    margin: 1rem 0 0 0;
+    padding: 0;
     text-align: center;
-    margin-right: 2rem;
-    margin-top: 2rem;
     opacity: 0.7;
   }
 
@@ -18,112 +32,348 @@
     cursor: pointer;
   }
 
-  .filter p {
+  .category-link {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .category-link:hover {
+    color: inherit;
+  }
+
+  .category-link p {
+    margin: 0.4rem 0 0;
     font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .tax-toggle {
+    flex: 0 0 auto !important;
+    margin-left: auto;
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.25rem;
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
   }
 
   .tax-info {
     display: none;
   }
 
-  .tax-toggle {
-    border: 1px solid black;
-    border-radius: 1rem;
-    height: 3.25rem;
-    padding: 1rem;
-    margin-left: 2rem;
-    display: flex;
-    align-items: center;
+  .category-link.active {
+    opacity: 1;
+    color: #fe424d;
+    font-weight: 600;
   }
+
+  .category-link.active i {
+    transform: scale(1.1);
+  }
+
+  .sort-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  margin: 1rem 2rem;
+}
+
+.sort-container label {
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.sort-container select {
+  width: 220px;
+  border-radius: 0.7rem;
+}
 </style>
 
 <div class="container-fluid">
   <div class="filters">
-    <div class="filter">
-      <div><i class="fa-solid fa-fire"></i></div>
-      <p>Trending</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-bed"></i></div>
-      <p>Rooms</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-mountain-city"></i></div>
-      <p>Iconic Cities</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-mountain"></i></div>
-      <p >Mountains</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-brands fa-fort-awesome"></i></div>
-      <p>Castles</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-person-swimming"></i></div>
-      <p>Amazing Pools</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-campground"></i></div>
-      <p>Camping</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-cow"></i></div>
-      <p>Farms</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-snowflake"></i></div>
-      <p>Arctic</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-igloo"></i></div>
-      <p>Domes</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-ship"></i></div>
-      <p>Boats</p>
-    </div>
 
-    <div class="tax-toggle">
-      <div class="form-check-reverse form-switch">
-        <input class="form-check-input" type="checkbox" id="switchCheckDefault">
-        <label class="form-check-label small" for="switchCheckDefault">Display total after taxes</label>
-      </div>
+  <a
+    href="/listings?category=trending"
+    class="filter category-link <%= selectedCategory === 'trending' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-fire"></i>
+    </div>
+    <p>Trending</p>
+  </a>
+
+  <a
+    href="/listings?category=rooms"
+    class="filter category-link <%= selectedCategory === 'rooms' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-bed"></i>
+    </div>
+    <p>Rooms</p>
+  </a>
+
+  <a
+    href="/listings?category=iconic-cities"
+    class="filter category-link <%= selectedCategory === 'iconic-cities' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-mountain-city"></i>
+    </div>
+    <p>Iconic Cities</p>
+  </a>
+
+  <a
+    href="/listings?category=mountains"
+    class="filter category-link <%= selectedCategory === 'mountains' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-mountain"></i>
+    </div>
+    <p>Mountains</p>
+  </a>
+
+  <a
+    href="/listings?category=castles"
+    class="filter category-link <%= selectedCategory === 'castles' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-brands fa-fort-awesome"></i>
+    </div>
+    <p>Castles</p>
+  </a>
+
+  <a
+    href="/listings?category=pools"
+    class="filter category-link <%= selectedCategory === 'pools' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-person-swimming"></i>
+    </div>
+    <p>Amazing Pools</p>
+  </a>
+
+  <a
+    href="/listings?category=camping"
+    class="filter category-link <%= selectedCategory === 'camping' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-campground"></i>
+    </div>
+    <p>Camping</p>
+  </a>
+
+  <a
+    href="/listings?category=farms"
+    class="filter category-link <%= selectedCategory === 'farms' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-cow"></i>
+    </div>
+    <p>Farms</p>
+  </a>
+
+  <a
+    href="/listings?category=arctic"
+    class="filter category-link <%= selectedCategory === 'arctic' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-snowflake"></i>
+    </div>
+    <p>Arctic</p>
+  </a>
+
+  <a
+    href="/listings?category=domes"
+    class="filter category-link <%= selectedCategory === 'domes' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-igloo"></i>
+    </div>
+    <p>Domes</p>
+  </a>
+
+  <a
+    href="/listings?category=boats"
+    class="filter category-link <%= selectedCategory === 'boats' ? 'active' : '' %>"
+  >
+    <div>
+      <i class="fa-solid fa-ship"></i>
+    </div>
+    <p>Boats</p>
+  </a>
+
+  <div class="tax-toggle">
+    <div class="form-check-reverse form-switch">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="switchCheckDefault"
+      />
+
+      <label
+        class="form-check-label small"
+        for="switchCheckDefault"
+      >
+        Display total after taxes
+      </label>
     </div>
   </div>
+
+</div>
 </div> 
 
+<div class="sort-container">
+  <label for="sort">Sort by:</label>
+
+  <select
+    id="sort"
+    class="form-select"
+    onchange="applySort(this.value)"
+  >
+    <option value="">Recommended</option>
+    <option
+      value="price-asc"
+      <%= selectedSort === "price-asc" ? "selected" : "" %>
+    >
+      Price: Low to High
+    </option>
+
+    <option
+      value="price-desc"
+      <%= selectedSort === "price-desc" ? "selected" : "" %>
+    >
+      Price: High to Low
+    </option>
+
+    <option
+      value="newest"
+      <%= selectedSort === "newest" ? "selected" : "" %>
+    >
+      Newest
+    </option>
+
+    <option
+      value="title-asc"
+      <%= selectedSort === "title-asc" ? "selected" : "" %>
+    >
+      Title: A → Z
+    </option>
+  </select>
+</div>
+
     
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">  
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+
   <% for(let listing of allListings) { %>
     <a href="/listings/<%= listing._id %>" class="listing-link">
       <div class="card col listing-card">
-        <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing_image" style="height: 20rem;">
+        <img
+          src="<%= listing.image.url %>"
+          class="card-img-top"
+          alt="Listing_image"
+          style="height: 20rem;"
+        />
+
         <div class="card-img-overlay"></div>
+
         <div class="card-body">
           <p class="card-text">
-            <b><%= listing.title %></b> <br>
-            &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-            <i class="tax-info">&nbsp; &nbsp; +18% GST</i>
+            <b><%= listing.title %></b>
+            <br>
+
+            <span class="price">
+              &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+            </span>
+
+            <span class="tax-info">
+              &#8377; <%= Math.round(listing.price * 1.18).toLocaleString("en-IN") %> incl. taxes
+            </span>
           </p>
         </div>
       </div>
     </a>
   <% } %>
+
 </div>
+
+
+<!-- PAGINATION -->
+<% if (totalPages > 1) { %>
+
+  <div class="pagination-container">
+
+    <% if (currentPage > 1) { %>
+      <a
+        href="/listings?page=<%= currentPage - 1 %><%= searchQuery ? '&search=' + encodeURIComponent(searchQuery) : '' %><%= selectedCategory ? '&category=' + encodeURIComponent(selectedCategory) : '' %>"
+        class="pagination-btn"
+      >
+        ← Previous
+      </a>
+    <% } %>
+
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <a
+        href="/listings?page=<%= i %><%= searchQuery ? '&search=' + encodeURIComponent(searchQuery) : '' %><%= selectedCategory ? '&category=' + encodeURIComponent(selectedCategory) : '' %>"
+        class="pagination-number <%= currentPage === i ? 'active' : '' %>"
+      >
+        <%= i %>
+      </a>
+    <% } %>
+
+
+    <% if (currentPage < totalPages) { %>
+      <a
+        href="/listings?page=<%= currentPage + 1 %><%= searchQuery ? '&search=' + encodeURIComponent(searchQuery) : '' %><%= selectedCategory ? '&category=' + encodeURIComponent(selectedCategory) : '' %>"
+        class="pagination-btn"
+      >
+        Next →
+      </a>
+    <% } %>
+
+  </div>
+
+<% } %>
 
 
 <script>
   let taxSwitch = document.getElementById("switchCheckDefault");
+
   taxSwitch.addEventListener("click", () => {
     let taxInfo = document.getElementsByClassName("tax-info");
-    for(info of taxInfo) {
-      if (info.style.display != "inline") {
-        info.style.display = "inline"
+    let prices = document.getElementsByClassName("price");
+
+    for (let i = 0; i < taxInfo.length; i++) {
+      if (taxSwitch.checked) {
+        taxInfo[i].style.display = "inline";
+        prices[i].style.display = "none";
       } else {
-        info.style.display = "none"
+        taxInfo[i].style.display = "none";
+        prices[i].style.display = "inline";
       }
     }
-  })
+  });
+
+  function applySort(sortValue) {
+    const url = new URL(window.location.href);
+
+    if (sortValue) {
+      url.searchParams.set("sort", sortValue);
+    } else {
+      url.searchParams.delete("sort");
+    }
+
+    // When sorting changes, start from page 1
+    url.searchParams.set("page", "1");
+
+    window.location.href = url.toString();
+  }
 </script>
 

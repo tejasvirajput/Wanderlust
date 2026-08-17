@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review"); // ✅ required to make the post hook work
-const { required } = require("joi");
 
 const listingSchema = new Schema({
   title: { type: String, required: true },
@@ -13,6 +12,12 @@ const listingSchema = new Schema({
   price: Number,
   location: String,
   country: String,
+
+  categories: {
+    type: [String],
+    default: [],
+  },
+
   reviews: [
     {
       type: Schema.Types.ObjectId,

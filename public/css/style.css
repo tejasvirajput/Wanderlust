@@ -123,3 +123,33 @@ body {
   height: 400px;
   width: 80vp;
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 3rem 0;
+}
+
+.pagination-btn,
+.pagination-number {
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  color: #222;
+  background: white;
+}
+
+.pagination-btn:hover,
+.pagination-number:hover {
+  background-color: #f5f5f5;
+  color: #222;
+}
+
+.pagination-number.active {
+  background-color: #fe424d;
+  color: white;
+  border-color: #fe424d;
+}

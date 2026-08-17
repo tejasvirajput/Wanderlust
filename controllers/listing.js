@@ -6,8 +6,61 @@ const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find();
-  res.render("./listings/index.ejs", { allListings });
+  const { search, category, sort } = req.query;
+
+  let filter = {};
+
+  // 🔎 Search
+  if (search && search.trim() !== "") {
+    const searchRegex = new RegExp(search.trim(), "i");
+
+    filter.$or = [
+      { title: searchRegex },
+      { description: searchRegex },
+      { location: searchRegex },
+      { country: searchRegex },
+    ];
+  }
+
+  // 🏷️ Category
+  if (category) {
+    filter.categories = category;
+  }
+
+  // 📄 Pagination
+  const page = parseInt(req.query.page) || 1;
+  const limit = 9;
+  const skip = (page - 1) * limit;
+
+  // 🔀 Sorting
+  let sortOption = {};
+
+  if (sort === "price-asc") {
+    sortOption.price = 1;
+  } else if (sort === "price-desc") {
+    sortOption.price = -1;
+  } else if (sort === "newest") {
+    sortOption._id = -1;
+  } else if (sort === "title-asc") {
+    sortOption.title = 1;
+  }
+
+  const totalListings = await Listing.countDocuments(filter);
+  const totalPages = Math.ceil(totalListings / limit);
+
+  const allListings = await Listing.find(filter)
+    .sort(sortOption)
+    .skip(skip)
+    .limit(limit);
+
+  res.render("./listings/index.ejs", {
+    allListings,
+    selectedCategory: category || "",
+    searchQuery: search || "",
+    currentPage: page,
+    totalPages,
+    selectedSort: sort || "",
+  });
 };
 
 module.exports.renderNewForm = (req, res) => {
