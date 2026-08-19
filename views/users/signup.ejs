@@ -1,41 +1,222 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-  <h1 class="col-6 offset-3">signUp on Wanderlust</h1>
-  <div class="col-8 offset-3">
+<style>
+  /* ==========================================
+     SIGNUP PAGE
+  ========================================== */
+
+  .signup-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+  }
+
+  .signup-card {
+    width: 100%;
+    max-width: 450px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 1.25rem;
+    padding: 2.2rem;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.07);
+  }
+
+  .signup-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    background: rgba(254, 66, 77, 0.1);
+    color: #fe424d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+
+  .signup-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .signup-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .signup-header p {
+    color: #717171;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .signup-field {
+    margin-bottom: 1.25rem;
+  }
+
+  .signup-field label {
+    display: block;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.5rem;
+  }
+
+  .signup-field input {
+    border: 1px solid #d8d8d8;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+  }
+
+  .signup-field input:focus {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.1);
+  }
+
+  .signup-btn {
+    width: 100%;
+    background: #fe424d;
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.8rem 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+  }
+
+  .signup-btn:hover {
+    background: #e93642;
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .signup-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #eee;
+    font-size: 0.9rem;
+    color: #717171;
+  }
+
+  .signup-footer a {
+    color: #fe424d;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .signup-footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 576px) {
+    .signup-page {
+      padding: 2rem 1rem;
+    }
+
+    .signup-card {
+      padding: 1.5rem;
+      border-radius: 1rem;
+    }
+
+    .signup-header h1 {
+      font-size: 1.6rem;
+    }
+  }
+</style>
+
+<div class="signup-page">
+  <div class="signup-card">
+    <!-- Header -->
+
+    <div class="signup-header">
+      <div class="signup-icon">
+        <i class="fa-solid fa-user-plus"></i>
+      </div>
+
+      <h1>Create your account</h1>
+
+      <p>Join WanderLust and start exploring amazing stays.</p>
+    </div>
+
+    <!-- Signup Form -->
+
     <form action="/signup" method="POST" class="needs-validation" novalidate>
-      <div class="mb-3">
-        <label for="username" class="form-lable">Username</label>
+      <!-- Username -->
+
+      <div class="signup-field">
+        <label for="username"> Username </label>
+
         <input
           type="text"
           name="username"
           id="username"
           class="form-control"
+          placeholder="Choose a username"
+          autocomplete="username"
           required
         />
+
         <div class="valid-feedback">Looks good!</div>
+
+        <div class="invalid-feedback">Please choose a username.</div>
       </div>
-      <div class="mb-3">
-        <label for="email" class="form-lable">Email</label>
+
+      <!-- Email -->
+
+      <div class="signup-field">
+        <label for="email"> Email </label>
+
         <input
           type="email"
           name="email"
           id="email"
           class="form-control"
+          placeholder="Enter your email"
+          autocomplete="email"
           required
         />
+
+        <div class="invalid-feedback">Please enter a valid email address.</div>
       </div>
-      <div class="mb-3">
-        <label for="password" class="form-lable">Password</label>
+
+      <!-- Password -->
+
+      <div class="signup-field">
+        <label for="password"> Password </label>
+
         <input
           type="password"
           name="password"
           id="password"
           class="form-control"
+          placeholder="Create a password"
+          autocomplete="new-password"
           required
         />
+
+        <div class="invalid-feedback">Please enter a password.</div>
       </div>
-      <button class="btn btn-success">SignUp</button>
+
+      <!-- Submit -->
+
+      <button type="submit" class="signup-btn">
+        <i class="fa-solid fa-user-plus me-1"></i>
+        Create account
+      </button>
     </form>
+
+    <!-- Login link -->
+
+    <div class="signup-footer">
+      Already have an account?
+
+      <a href="/login"> Log in </a>
+    </div>
   </div>
 </div>

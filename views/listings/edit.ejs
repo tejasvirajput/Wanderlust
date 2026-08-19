@@ -1,85 +1,386 @@
 <% layout("/layouts/boilerplate") %>
-<body>
-  <div class="row mt-3">
-    <div class="col-8 offset-2">
-      <h3>Edit your Listing</h3>
+
+<style>
+  /* ==========================================
+     EDIT LISTING PAGE
+  ========================================== */
+
+  .edit-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+  }
+
+  .edit-header {
+    margin-bottom: 2rem;
+  }
+
+  .edit-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .edit-header p {
+    color: #717171;
+    margin: 0;
+  }
+
+  .edit-card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 1.25rem;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  }
+
+  .edit-section {
+    margin-bottom: 2rem;
+  }
+
+  .edit-section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+
+  .edit-field {
+    margin-bottom: 1.25rem;
+  }
+
+  .edit-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #222;
+  }
+
+  .edit-field input,
+  .edit-field textarea {
+    border: 1px solid #d8d8d8;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .edit-field input:focus,
+  .edit-field textarea:focus {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.1);
+  }
+
+  .edit-field textarea {
+    min-height: 140px;
+    resize: vertical;
+  }
+
+  /* ==========================================
+     CURRENT IMAGE
+  ========================================== */
+
+  .current-image-box {
+    background: #f8f8f8;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .current-image-box img {
+    display: block;
+    width: 260px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
+
+  .current-image-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #717171;
+    margin-bottom: 0.6rem;
+  }
+
+  .file-input {
+    border: 1px dashed #cfcfcf !important;
+    background: #fafafa;
+    cursor: pointer;
+  }
+
+  .file-input:hover {
+    border-color: #fe424d !important;
+  }
+
+  /* ==========================================
+     DIVIDER
+  ========================================== */
+
+  .edit-divider {
+    border: 0;
+    border-top: 1px solid #eeeeee;
+    margin: 2rem 0;
+  }
+
+  /* ==========================================
+     ACTIONS
+  ========================================== */
+
+  .edit-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .save-edit-btn {
+    background: #fe424d;
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .save-edit-btn:hover {
+    background: #e93642;
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .cancel-edit-btn {
+    border: 1px solid #ddd;
+    color: #333;
+    background: white;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .cancel-edit-btn:hover {
+    border-color: #333;
+    color: #111;
+  }
+
+  /* ==========================================
+     RESPONSIVE
+  ========================================== */
+
+  @media (max-width: 767px) {
+    .edit-page {
+      padding: 0 1rem 3rem;
+    }
+
+    .edit-card {
+      padding: 1.25rem;
+      border-radius: 1rem;
+    }
+
+    .edit-header h1 {
+      font-size: 1.6rem;
+    }
+
+    .current-image-box img {
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .edit-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .save-edit-btn,
+    .cancel-edit-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<div class="container py-5">
+  <div class="edit-page">
+    <!-- ================================
+         Header
+    ================================= -->
+
+    <div class="edit-header">
+      <h1>Edit your listing</h1>
+
+      <p>Update your property details, image, pricing and location.</p>
+    </div>
+
+    <!-- ================================
+         Form Card
+    ================================= -->
+
+    <div class="edit-card">
       <form
-        action="/listings/<%=listing._id%>?_method=PUT"
+        action="/listings/<%= listing._id %>?_method=PUT"
         method="POST"
         novalidate
         class="needs-validation"
         enctype="multipart/form-data"
       >
-        <div class="mb-3">
-          <label for="title" class="form-lable">Title</label>
-          <input
-            type="text"
-            name="listing[title]"
-            value="<%= listing.title %>"
-            class="form-control"
-            required
-          />
-          <div class="valid-feedback">Title looks good!</div>
-        </div>
+        <!-- ================================
+             BASIC INFORMATION
+        ================================= -->
 
-        <div class="mb-3">
-          <label for="description" class="form-lable">Description</label>
-          <textarea name="listing[description]" class="form-control" required>
+        <div class="edit-section">
+          <h2 class="edit-section-title">Property information</h2>
+
+          <div class="edit-field">
+            <label for="title"> Title </label>
+
+            <input
+              id="title"
+              type="text"
+              name="listing[title]"
+              value="<%= listing.title %>"
+              class="form-control"
+              required
+            />
+
+            <div class="valid-feedback">Title looks good!</div>
+
+            <div class="invalid-feedback">Please enter a title.</div>
+          </div>
+
+          <div class="edit-field">
+            <label for="description"> Description </label>
+
+            <textarea
+              id="description"
+              name="listing[description]"
+              class="form-control"
+              required
+            >
 <%= listing.description %></textarea
-          >
-          <div class="invalid-feedback">Please enter a short description</div>
-        </div>
+            >
 
-        <div class="mb-3">
-          Original Listing Image <br />
-          <img src="<%= originalImageUrl %>" alt="Original Image" />
-        </div>
-        <div class="mb-3">
-          <label for="image" class="form-lable">Upload New Image</label>
-          <input type="file" name="listing[image]" class="form-control" />
-        </div>
-
-        <div class="row">
-          <div class="mb-3 col-md-4">
-            <label for="price" class="form-lable">Price</label>
-            <input
-              type="text"
-              name="listing[price]"
-              value="<%= listing.price %>"
-              class="form-control"
-              required
-            />
-            <div class="invalid-feedback">Price should be valid</div>
-          </div>
-
-          <div class="mb-3 col-md-8">
-            <label for="country" class="form-lable">Country</label>
-            <input
-              type="text"
-              name="listing[country]"
-              value="<%= listing.country %>"
-              class="form-control"
-              required
-            />
-            <div class="invalid-feedback">Country name should be valid</div>
+            <div class="invalid-feedback">
+              Please enter a short description.
+            </div>
           </div>
         </div>
 
-        <div class="mb-3">
-          <label for="location" class="form-lable">Location</label>
-          <input
-            type="text"
-            name="listing[location]"
-            value="<%= listing.location %>"
-            class="form-control"
-            required
-          />
-          <div class="invalid-feedback">Location should be valid</div>
+        <hr class="edit-divider" />
+
+        <!-- ================================
+             IMAGE
+        ================================= -->
+
+        <div class="edit-section">
+          <h2 class="edit-section-title">Property image</h2>
+
+          <span class="current-image-label"> Current listing image </span>
+
+          <div class="current-image-box">
+            <img src="<%= originalImageUrl %>" alt="Current listing image" />
+          </div>
+
+          <div class="edit-field mb-0">
+            <label for="image"> Upload a new image </label>
+
+            <input
+              id="image"
+              type="file"
+              name="listing[image]"
+              class="form-control file-input"
+              accept="image/*"
+            />
+
+            <div class="form-text">
+              Leave this empty if you want to keep the current image.
+            </div>
+          </div>
         </div>
-        <button class="btn btn-dark edit-btn mt-3">Edit</button>
-        <br />
-        <br />
+
+        <hr class="edit-divider" />
+
+        <!-- ================================
+             PRICE & LOCATION
+        ================================= -->
+
+        <div class="edit-section">
+          <h2 class="edit-section-title">Price & location</h2>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="edit-field">
+                <label for="price"> Price per night </label>
+
+                <div class="input-group">
+                  <span class="input-group-text"> ₹ </span>
+
+                  <input
+                    id="price"
+                    type="number"
+                    name="listing[price]"
+                    value="<%= listing.price %>"
+                    class="form-control"
+                    min="1"
+                    required
+                  />
+                </div>
+
+                <div class="invalid-feedback">Price should be valid.</div>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="edit-field">
+                <label for="country"> Country </label>
+
+                <input
+                  id="country"
+                  type="text"
+                  name="listing[country]"
+                  value="<%= listing.country %>"
+                  class="form-control"
+                  required
+                />
+
+                <div class="invalid-feedback">
+                  Country name should be valid.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="edit-field mb-0">
+            <label for="location"> Location </label>
+
+            <input
+              id="location"
+              type="text"
+              name="listing[location]"
+              value="<%= listing.location %>"
+              class="form-control"
+              required
+            />
+
+            <div class="invalid-feedback">Location should be valid.</div>
+          </div>
+        </div>
+
+        <!-- ================================
+             ACTIONS
+        ================================= -->
+
+        <div class="edit-actions">
+          <button type="submit" class="save-edit-btn">
+            <i class="fa-solid fa-check me-1"></i>
+            Save changes
+          </button>
+
+          <a href="/listings/<%= listing._id %>" class="cancel-edit-btn">
+            Cancel
+          </a>
+        </div>
       </form>
     </div>
   </div>
-</body>
+</div>

@@ -28,6 +28,7 @@ const User = require("./models/user.js");
 
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
+const bookingRouter = require("./routes/booking.js");
 const userRouter = require("./routes/user.js");
 const aiRouter = require("./routes/ai.js");
 
@@ -110,6 +111,8 @@ const aiLimiter = rateLimit({
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
+app.use("/listings/:id/bookings", bookingRouter);
+app.use("/bookings", bookingRouter);
 app.use("/", userRouter);
 app.use("/ai", aiLimiter, aiRouter);
 

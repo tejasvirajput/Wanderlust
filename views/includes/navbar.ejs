@@ -1,31 +1,86 @@
 <style>
+  /* ================================
+     WanderLust Search
+  ================================= */
+
   .search-btn {
     background-color: #fe424d;
     color: #fff;
+    border: none;
     border-radius: 25px;
-    padding: 0 1rem 0 1rem;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 0.2s ease;
   }
 
   .search-btn:hover {
-    background-color: #fe424d;
+    background-color: #e93642;
     color: #fff;
+    transform: translateY(-1px);
   }
 
   .search-btn i {
-    display: inline;
-    margin-right: 0.5rem;
+    margin-right: 0.45rem;
   }
 
   .search-inp {
+    width: 325px;
+    border: 1px solid #ddd;
     border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
-    font-size: 1rem;
+    padding: 0.65rem 1.3rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
   }
+
+  .search-inp:focus {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.1);
+    outline: none;
+  }
+
+  .search-inp::placeholder {
+    color: #777;
+  }
+
+  /* ================================
+     Responsive Search
+  ================================= */
+
+  @media (max-width: 767px) {
+  .navbar form {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .search-inp {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+
+  .search-btn {
+    padding: 0.65rem 0.9rem;
+  }
+}
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+
+    <!-- Logo + Explore -->
+    <div class="navbar-left">
+      <a class="navbar-brand" href="/listings">
+        <i class="fa-regular fa-compass"></i>
+      </a>
+
+      <div class="navbar-explore">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+    </div>
+
+    <!-- Mobile toggle -->
     <button
       class="navbar-toggler"
       type="button"
@@ -35,44 +90,71 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
-      </div>
+
+      <!-- Search -->
       <div class="navbar-nav ms-auto">
         <form
-  class="d-flex"
-  role="search"
-  action="/listings"
-  method="GET"
->
-  <input
-    class="form-control me-2 search-inp"
-    type="search"
-    name="search"
-    placeholder="Search destinations"
-    aria-label="Search"
-  />
+          class="d-flex"
+          role="search"
+          action="/listings"
+          method="GET"
+        >
+          <input
+            class="form-control me-2 search-inp"
+            type="search"
+            name="search"
+            placeholder="Where do you want to wander?"
+            aria-label="Search"
+          />
 
-  <button
-    class="btn search-btn"
-    type="submit"
-  >
-    <i class="fa-solid fa-magnifying-glass"></i>
-    Search
-  </button>
-</form>
+          <button
+            class="btn search-btn"
+            type="submit"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Search
+          </button>
+        </form>
       </div>
+
+      <!-- User navigation -->
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <a class="nav-link" href="/listings/new">
+          List your property
+        </a>
+
         <% if(!currUser) { %>
-        <a class="nav-link" href="/signup"><b>Sign up</b></a>
-        <a class="nav-link" href="/login"><b>Log in</b></a>
+
+          <a class="nav-link" href="/signup">
+            <b>Sign up</b>
+          </a>
+
+          <a class="nav-link" href="/login">
+            <b>Log in</b>
+          </a>
+
         <% } %>
+
         <% if(currUser) { %>
-        <a class="nav-link" href="/logout"><b>Log out</b></a>
-        <% } %>
+
+  <a class="nav-link" href="/listings/dashboard">
+    <b>Dashboard</b>
+  </a>
+
+  <a class="nav-link" href="/bookings/my">
+    <b>My Bookings</b>
+  </a>
+
+  <a class="nav-link" href="/logout">
+    <b>Log out</b>
+  </a>
+
+<% } %>
       </div>
+
     </div>
   </div>
 </nav>

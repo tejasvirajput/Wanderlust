@@ -1,32 +1,196 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-  <h1 class="col-6 offset-3">Login on Wanderlust</h1>
-  <div class="col-8 offset-3">
+<style>
+  /* ==========================================
+     LOGIN PAGE
+  ========================================== */
+
+  .login-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 450px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 1.25rem;
+    padding: 2.2rem;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.07);
+  }
+
+  .login-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    background: rgba(254, 66, 77, 0.1);
+    color: #fe424d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .login-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .login-header p {
+    color: #717171;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .login-field {
+    margin-bottom: 1.25rem;
+  }
+
+  .login-field label {
+    display: block;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.5rem;
+  }
+
+  .login-field input {
+    border: 1px solid #d8d8d8;
+    border-radius: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+  }
+
+  .login-field input:focus {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.1);
+  }
+
+  .login-btn {
+    width: 100%;
+    background: #fe424d;
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.8rem 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+  }
+
+  .login-btn:hover {
+    background: #e93642;
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #eee;
+    font-size: 0.9rem;
+    color: #717171;
+  }
+
+  .login-footer a {
+    color: #fe424d;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .login-footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 576px) {
+    .login-page {
+      padding: 2rem 1rem;
+    }
+
+    .login-card {
+      padding: 1.5rem;
+      border-radius: 1rem;
+    }
+
+    .login-header h1 {
+      font-size: 1.6rem;
+    }
+  }
+</style>
+
+<div class="login-page">
+  <div class="login-card">
+    <!-- Header -->
+
+    <div class="login-header">
+      <div class="login-icon">
+        <i class="fa-solid fa-compass"></i>
+      </div>
+
+      <h1>Welcome back</h1>
+
+      <p>Log in to continue your WanderLust journey.</p>
+    </div>
+
+    <!-- Login Form -->
+
     <form action="/login" method="POST" class="needs-validation" novalidate>
-      <div class="mb-3">
-        <label for="username" class="form-lable">Username</label>
+      <div class="login-field">
+        <label for="username"> Username </label>
+
         <input
           type="text"
           name="username"
           id="username"
           class="form-control"
+          placeholder="Enter your username"
+          autocomplete="username"
           required
         />
+
+        <div class="invalid-feedback">Please enter your username.</div>
       </div>
 
-      <div class="mb-3">
-        <label for="password" class="form-lable">Password</label>
+      <div class="login-field">
+        <label for="password"> Password </label>
+
         <input
           type="password"
           name="password"
           id="password"
           class="form-control"
+          placeholder="Enter your password"
+          autocomplete="current-password"
           required
         />
+
+        <div class="invalid-feedback">Please enter your password.</div>
       </div>
 
-      <button class="btn btn-success">Login</button>
+      <button type="submit" class="login-btn">
+        <i class="fa-solid fa-right-to-bracket me-1"></i>
+        Log in
+      </button>
     </form>
+
+    <!-- Sign-up link -->
+
+    <div class="login-footer">
+      Don't have an account?
+
+      <a href="/signup"> Sign up </a>
+    </div>
   </div>
 </div>

@@ -1,7 +1,5 @@
-const { Query } = require("mongoose");
 const Listing = require("../models/listing");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-const { response } = require("express");
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 

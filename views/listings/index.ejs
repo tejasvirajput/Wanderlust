@@ -20,7 +20,7 @@
   .filter {
     flex: 0 0 auto !important;
     width: auto !important;
-    min-width: 70px;
+    min-width: 62px;
     margin: 1rem 0 0 0;
     padding: 0;
     text-align: center;
@@ -156,7 +156,7 @@
     <div>
       <i class="fa-solid fa-person-swimming"></i>
     </div>
-    <p>Amazing Pools</p>
+    <p>Pools</p>
   </a>
 
   <a
@@ -269,36 +269,51 @@
 </div>
 
     
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 listing-grid mt-3">
 
   <% for(let listing of allListings) { %>
     <a href="/listings/<%= listing._id %>" class="listing-link">
-      <div class="card col listing-card">
-        <img
-          src="<%= listing.image.url %>"
-          class="card-img-top"
-          alt="Listing_image"
-          style="height: 20rem;"
-        />
+  <div class="card col listing-card">
 
-        <div class="card-img-overlay"></div>
+    <div class="card-img-wrapper">
 
-        <div class="card-body">
-          <p class="card-text">
-            <b><%= listing.title %></b>
-            <br>
+      <img
+        src="<%= listing.image.url %>"
+        class="card-img-top"
+        alt="Listing_image"
+      />
 
-            <span class="price">
-              &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
-            </span>
-
-            <span class="tax-info">
-              &#8377; <%= Math.round(listing.price * 1.18).toLocaleString("en-IN") %> incl. taxes
-            </span>
-          </p>
-        </div>
+      <div class="explore-overlay">
+        <span>Explore stay →</span>
       </div>
-    </a>
+
+    </div>
+
+    <div class="card-body">
+
+      <p class="card-title">
+        <%= listing.title %>
+      </p>
+
+      <p class="card-location">
+  <%= listing.location %>
+</p>
+
+      <p class="card-price">
+        <span class="price">
+          &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+        </span>
+
+        <span class="tax-info">
+          &#8377; <%= Math.round(listing.price * 1.18).toLocaleString("en-IN") %>
+          incl. taxes
+        </span>
+      </p>
+
+    </div>
+
+  </div>
+</a>
   <% } %>
 
 </div>
@@ -310,32 +325,38 @@
   <div class="pagination-container">
 
     <% if (currentPage > 1) { %>
+
       <a
-        href="/listings?page=<%= currentPage - 1 %><%= searchQuery ? '&search=' + encodeURIComponent(searchQuery) : '' %><%= selectedCategory ? '&category=' + encodeURIComponent(selectedCategory) : '' %>"
+        href="/listings?page=<%= currentPage - 1 %><%= searchQuery ? '&search=' + encodeURIComponent(searchQuery) : '' %><%= selectedCategory ? '&category=' + encodeURIComponent(selectedCategory) : '' %><%= selectedSort ? '&sort=' + encodeURIComponent(selectedSort) : '' %>"
         class="pagination-btn"
       >
         ← Previous
       </a>
+
     <% } %>
 
 
     <% for (let i = 1; i <= totalPages; i++) { %>
+
       <a
-        href="/listings?page=<%= i %><%= searchQuery ? '&search=' + encodeURIComponent(searchQuery) : '' %><%= selectedCategory ? '&category=' + encodeURIComponent(selectedCategory) : '' %>"
+        href="/listings?page=<%= i %><%= searchQuery ? '&search=' + encodeURIComponent(searchQuery) : '' %><%= selectedCategory ? '&category=' + encodeURIComponent(selectedCategory) : '' %><%= selectedSort ? '&sort=' + encodeURIComponent(selectedSort) : '' %>"
         class="pagination-number <%= currentPage === i ? 'active' : '' %>"
       >
         <%= i %>
       </a>
+
     <% } %>
 
 
     <% if (currentPage < totalPages) { %>
+
       <a
-        href="/listings?page=<%= currentPage + 1 %><%= searchQuery ? '&search=' + encodeURIComponent(searchQuery) : '' %><%= selectedCategory ? '&category=' + encodeURIComponent(selectedCategory) : '' %>"
+        href="/listings?page=<%= currentPage + 1 %><%= searchQuery ? '&search=' + encodeURIComponent(searchQuery) : '' %><%= selectedCategory ? '&category=' + encodeURIComponent(selectedCategory) : '' %><%= selectedSort ? '&sort=' + encodeURIComponent(selectedSort) : '' %>"
         class="pagination-btn"
       >
         Next →
       </a>
+
     <% } %>
 
   </div>

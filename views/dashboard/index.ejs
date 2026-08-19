@@ -1,0 +1,625 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  /* ==========================================
+     HOST DASHBOARD
+  ========================================== */
+
+  .dashboard-page {
+    max-width: 1200px;
+  }
+
+  .dashboard-header {
+    margin-bottom: 3rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2.4rem;
+    letter-spacing: -0.5px;
+  }
+
+  .dashboard-header p {
+    font-size: 1rem;
+  }
+
+  /* ==========================================
+     STATISTICS
+  ========================================== */
+
+  .dashboard-stat {
+    border: 1px solid #eee !important;
+    border-radius: 18px !important;
+    background: #fff;
+    padding: 1.5rem !important;
+    transition: all 0.25s ease;
+  }
+
+  .dashboard-stat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .stat-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    background: rgba(254, 66, 77, 0.1);
+    color: #fe424d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-stat h6 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: 0.4rem;
+  }
+
+  .dashboard-stat h2 {
+    font-size: 1.8rem;
+  }
+
+  /* ==========================================
+     SECTION HEADINGS
+  ========================================== */
+
+  .dashboard-section {
+    margin-bottom: 4rem;
+  }
+
+  .dashboard-section-title {
+    font-size: 1.65rem;
+    letter-spacing: -0.3px;
+  }
+
+  /* ==========================================
+     ADD PROPERTY BUTTON
+  ========================================== */
+
+  .add-property-btn {
+    border-radius: 12px;
+    padding: 0.7rem 1.15rem;
+    font-weight: 600;
+    border: none;
+  }
+
+  /* ==========================================
+     PROPERTY CARDS
+  ========================================== */
+
+  .property-card {
+    border: 1px solid #eee !important;
+    border-radius: 18px !important;
+    overflow: hidden;
+    background: #fff;
+    transition: all 0.25s ease;
+  }
+
+  .property-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .property-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .property-card .card-body {
+    padding: 1.25rem;
+  }
+
+  .property-title {
+    font-size: 1.05rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .property-location {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 0.7rem;
+  }
+
+  .property-price {
+    font-size: 0.95rem;
+    margin-bottom: 0;
+  }
+
+  .property-card .card-footer {
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  .view-property-btn {
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  /* ==========================================
+     EMPTY STATES
+  ========================================== */
+
+  .dashboard-empty {
+    border: 1px dashed #ddd;
+    border-radius: 18px;
+    background: #fafafa;
+  }
+
+  .dashboard-empty-icon {
+    font-size: 2.8rem;
+    color: #fe424d;
+  }
+
+  /* ==========================================
+     BOOKINGS TABLE
+  ========================================== */
+
+  .bookings-wrapper {
+    border: 1px solid #eee;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .bookings-table {
+    margin-bottom: 0;
+  }
+
+  .bookings-table thead {
+    background: #fafafa;
+  }
+
+  .bookings-table th {
+    border-bottom: 1px solid #eee;
+    padding: 1rem;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #666;
+    white-space: nowrap;
+  }
+
+  .bookings-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f1f1;
+    vertical-align: middle;
+  }
+
+  .bookings-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .bookings-table tbody tr {
+    transition: background 0.2s ease;
+  }
+
+  .bookings-table tbody tr:hover {
+    background: #fffafa;
+  }
+
+  .booking-property {
+    font-weight: 600;
+  }
+
+  .booking-guest {
+    color: #555;
+  }
+
+  .booking-total {
+    font-weight: 600;
+  }
+
+  .booking-status {
+    font-size: 0.75rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  /* ==========================================
+     MOBILE
+  ========================================== */
+
+  @media (max-width: 767px) {
+
+    .dashboard-page {
+      padding-top: 2rem !important;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2rem;
+    }
+
+    .dashboard-section-title {
+      font-size: 1.4rem;
+    }
+
+    .add-property-btn {
+      padding: 0.6rem 0.85rem;
+      font-size: 0.9rem;
+    }
+
+    .property-image {
+      height: 210px;
+    }
+
+    .bookings-wrapper {
+      border-radius: 14px;
+    }
+
+    .bookings-table {
+      min-width: 850px;
+    }
+  }
+</style>
+
+
+<div class="container py-5 dashboard-page">
+
+  <!-- ==========================================
+       HEADER
+  ========================================== -->
+
+  <div class="dashboard-header">
+
+    <h1 class="fw-bold mb-2">
+      Host Dashboard
+    </h1>
+
+    <p class="text-muted mb-0">
+      Manage your properties and view your reservations.
+    </p>
+
+  </div>
+
+
+  <!-- ==========================================
+       STATISTICS
+  ========================================== -->
+
+  <div class="row g-4 mb-5">
+
+    <!-- Properties -->
+
+    <div class="col-md-4">
+
+      <div class="card dashboard-stat h-100 shadow-sm">
+
+        <div class="stat-icon">
+          <i class="fa-solid fa-house"></i>
+        </div>
+
+        <h6 class="text-muted">
+          My Properties
+        </h6>
+
+        <h2 class="fw-bold mb-0">
+          <%= listings.length %>
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <!-- Bookings -->
+
+    <div class="col-md-4">
+
+      <div class="card dashboard-stat h-100 shadow-sm">
+
+        <div class="stat-icon">
+          <i class="fa-solid fa-calendar-check"></i>
+        </div>
+
+        <h6 class="text-muted">
+          Total Bookings
+        </h6>
+
+        <h2 class="fw-bold mb-0">
+          <%= bookings.filter(b => b.status === "confirmed").length %>
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <!-- Revenue -->
+
+    <div class="col-md-4">
+
+      <div class="card dashboard-stat h-100 shadow-sm">
+
+        <div class="stat-icon">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </div>
+
+        <h6 class="text-muted">
+          Revenue
+        </h6>
+
+        <h2 class="fw-bold mb-0">
+          ₹<%= bookings
+            .filter(b => b.status === "confirmed")
+            .reduce((total, b) => total + b.totalPrice, 0)
+            .toLocaleString("en-IN") %>
+        </h2>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==========================================
+       MY PROPERTIES
+  ========================================== -->
+
+  <div class="dashboard-section">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+      <h2 class="fw-bold dashboard-section-title mb-0">
+        My Properties
+      </h2>
+
+      <a
+        href="/listings/new"
+        class="btn btn-danger add-property-btn"
+      >
+        <i class="fa-solid fa-plus me-1"></i>
+        Add Property
+      </a>
+
+    </div>
+
+
+    <% if (listings.length === 0) { %>
+
+      <div class="dashboard-empty text-center py-5">
+
+        <i class="fa-solid fa-house dashboard-empty-icon"></i>
+
+        <h4 class="mt-3">
+          You haven't listed any properties yet.
+        </h4>
+
+        <p class="text-muted">
+          Start hosting and share your property with travelers.
+        </p>
+
+        <a
+          href="/listings/new"
+          class="btn btn-danger mt-2"
+        >
+          <i class="fa-solid fa-plus me-1"></i>
+          List your property
+        </a>
+
+      </div>
+
+
+    <% } else { %>
+
+      <div class="row g-4">
+
+        <% listings.forEach(listing => { %>
+
+          <div class="col-md-6 col-lg-4">
+
+            <div class="card property-card shadow-sm h-100">
+
+              <% if (listing.image && listing.image.url) { %>
+
+                <img
+                  src="<%= listing.image.url %>"
+                  class="property-image"
+                  alt="<%= listing.title %>"
+                />
+
+              <% } %>
+
+
+              <div class="card-body">
+
+                <h5 class="property-title fw-bold">
+                  <%= listing.title %>
+                </h5>
+
+                <p class="property-location">
+
+                  <i class="fa-solid fa-location-dot me-1"></i>
+
+                  <%= listing.location %>,
+                  <%= listing.country %>
+
+                </p>
+
+                <p class="property-price fw-semibold">
+
+                  ₹<%= listing.price.toLocaleString("en-IN") %>
+
+                  <span class="text-muted fw-normal">
+                    / night
+                  </span>
+
+                </p>
+
+              </div>
+
+
+              <div class="card-footer bg-white border-0">
+
+                <a
+                  href="/listings/<%= listing._id %>"
+                  class="btn btn-outline-danger w-100 view-property-btn"
+                >
+                  View property
+                  <i class="fa-solid fa-arrow-right ms-1"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        <% }) %>
+
+      </div>
+
+    <% } %>
+
+  </div>
+
+
+  <!-- ==========================================
+       BOOKINGS RECEIVED
+  ========================================== -->
+
+  <div class="dashboard-section">
+
+    <h2 class="fw-bold dashboard-section-title mb-4">
+      Bookings Received
+    </h2>
+
+
+    <% if (bookings.length === 0) { %>
+
+      <div class="dashboard-empty text-center py-5">
+
+        <i class="fa-solid fa-calendar-xmark dashboard-empty-icon"></i>
+
+        <h4 class="mt-3">
+          No bookings yet.
+        </h4>
+
+        <p class="text-muted mb-0">
+          Reservations for your properties will appear here.
+        </p>
+
+      </div>
+
+
+    <% } else { %>
+
+      <div class="table-responsive bookings-wrapper">
+
+        <table class="table bookings-table align-middle">
+
+          <thead>
+
+            <tr>
+
+              <th>Property</th>
+              <th>Guest</th>
+              <th>Check-in</th>
+              <th>Check-out</th>
+              <th>Guests</th>
+              <th>Total</th>
+              <th>Status</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <% bookings.forEach(booking => { %>
+
+              <tr>
+
+                <td class="booking-property">
+
+                  <%= booking.listing
+                    ? booking.listing.title
+                    : "Property"
+                  %>
+
+                </td>
+
+
+                <td class="booking-guest">
+
+                  <%= booking.guest
+                    ? booking.guest.username
+                    : "Guest"
+                  %>
+
+                </td>
+
+
+                <td>
+
+                  <%= new Date(
+                    booking.checkIn
+                  ).toLocaleDateString("en-IN") %>
+
+                </td>
+
+
+                <td>
+
+                  <%= new Date(
+                    booking.checkOut
+                  ).toLocaleDateString("en-IN") %>
+
+                </td>
+
+
+                <td>
+
+                  <i class="fa-solid fa-user-group me-1 text-muted"></i>
+
+                  <%= booking.guests %>
+
+                </td>
+
+
+                <td class="booking-total">
+
+                  ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+
+                </td>
+
+
+                <td>
+
+                  <% if (booking.status === "confirmed") { %>
+
+                    <span class="badge bg-success booking-status">
+                      Confirmed
+                    </span>
+
+                  <% } else { %>
+
+                    <span class="badge bg-secondary booking-status">
+                      Cancelled
+                    </span>
+
+                  <% } %>
+
+                </td>
+
+              </tr>
+
+            <% }) %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    <% } %>
+
+  </div>
+
+</div>

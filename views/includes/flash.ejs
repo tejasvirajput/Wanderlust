@@ -1,12 +1,160 @@
-<% if (success && success.length) { %>
-    <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert"><%= success %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<% } %>
+<style>
+  /* ==========================================
+     WANDERLUST FLASH MESSAGES
+  ========================================== */
 
-<% if (error && error.length) { %>
-    <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert"><%= error %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-<% } %>
+  .flash-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0.75rem 1rem 0;
+  }
 
+  .wander-flash {
+    width: min(650px, 100%);
+    border: none;
+    border-radius: 14px;
+    padding: 0.9rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+
+  .flash-icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+
+  .flash-message {
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  .flash-close {
+    margin-left: auto;
+    padding: 0.6rem;
+    opacity: 0.65;
+  }
+
+  .flash-close:hover {
+    opacity: 1;
+  }
+
+  /* ==========================================
+     SUCCESS
+  ========================================== */
+
+  .wander-flash-success {
+    background: #f0fdf4;
+    color: #166534;
+  }
+
+  .wander-flash-success .flash-icon {
+    background: #dcfce7;
+    color: #16a34a;
+  }
+
+  /* ==========================================
+     ERROR
+  ========================================== */
+
+  .wander-flash-error {
+    background: #fff5f5;
+    color: #b4232d;
+  }
+
+  .wander-flash-error .flash-icon {
+    background: #ffe1e3;
+    color: #fe424d;
+  }
+
+  /* ==========================================
+     MOBILE
+  ========================================== */
+
+  @media (max-width: 576px) {
+
+    .flash-container {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    .wander-flash {
+      font-size: 0.85rem;
+      border-radius: 12px;
+      padding: 0.8rem;
+    }
+
+    .flash-icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+</style>
+
+
+<div class="flash-container">
+
+  <% if (success && success.length) { %>
+
+    <div
+      class="alert wander-flash wander-flash-success alert-dismissible fade show"
+      role="alert"
+    >
+
+      <div class="flash-icon">
+        <i class="fa-solid fa-check"></i>
+      </div>
+
+      <div class="flash-message">
+        <%= success %>
+      </div>
+
+      <button
+        type="button"
+        class="btn-close flash-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+
+    </div>
+
+  <% } %>
+
+
+  <% if (error && error.length) { %>
+
+    <div
+      class="alert wander-flash wander-flash-error alert-dismissible fade show"
+      role="alert"
+    >
+
+      <div class="flash-icon">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+
+      <div class="flash-message">
+        <%= error %>
+      </div>
+
+      <button
+        type="button"
+        class="btn-close flash-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+
+    </div>
+
+  <% } %>
+
+</div>

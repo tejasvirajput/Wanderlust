@@ -4,7 +4,7 @@ module.exports.renderSignupForm = (req, res) => {
   res.render("users/signup.ejs");
 };
 
-module.exports.signup = async (req, res) => {
+module.exports.signup = async (req, res, next) => {
   try {
     let { username, email, password } = req.body;
     const newUser = new User({ email, username });
@@ -33,12 +33,25 @@ module.exports.login = async (req, res) => {
   res.redirect(redirectUrl);
 };
 
-module.exports.logout = (req, res) => {
-  req.logOut((err) => {
+module.exports.logout = (req, res, next) => {
+  req.logout((err) => {
     if (err) {
       return next(err);
     }
+
+    // Clear temporary AI chat data
+    delete req.session.aiChatHistory;
+    delete req.session.aiListings;
+
     req.flash("success", "You are logged out!");
-    res.redirect("/listings");
+
+    // Save the cleaned session before redirecting
+    req.session.save((err) => {
+      if (err) {
+        return next(err);
+      }
+
+      res.redirect("/listings");
+    });
   });
 };
