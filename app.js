@@ -6,7 +6,12 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
 const express = require("express");
+
 const app = express();
+
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
+}
 
 app.use(
   helmet({
